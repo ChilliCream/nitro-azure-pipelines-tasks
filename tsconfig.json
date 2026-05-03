@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "files": [],
+  "references": [
+    { "path": "shared/nitro-common" },
+    { "path": "tasks/NitroClientPublishV16" },
+    { "path": "tasks/NitroClientUploadV16" },
+    { "path": "tasks/NitroClientValidateV16" },
+    { "path": "tasks/NitroFusionPublishV16" },
+    { "path": "tasks/NitroFusionUploadV16" },
+    { "path": "tasks/NitroFusionValidateV16" },
+    { "path": "tasks/NitroMcpPublishV16" },
+    { "path": "tasks/NitroMcpUploadV16" },
+    { "path": "tasks/NitroMcpValidateV16" },
+    { "path": "tasks/NitroOpenapiPublishV16" },
+    { "path": "tasks/NitroOpenapiUploadV16" },
+    { "path": "tasks/NitroOpenapiValidateV16" },
+    { "path": "tasks/NitroSchemaPublishV16" },
+    { "path": "tasks/NitroSchemaUploadV16" },
+    { "path": "tasks/NitroSchemaValidateV16" }
+  ]
+}

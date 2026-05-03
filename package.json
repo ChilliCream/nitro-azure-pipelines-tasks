@@ -1,0 +1,35 @@
+{
+  "name": "@chillicream/nitro-azure-pipelines-tasks",
+  "version": "1.0.0-seed",
+  "private": true,
+  "type": "module",
+  "description": "Azure Pipelines tasks for the Nitro CLI.",
+  "license": "MIT",
+  "author": "ChilliCream",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChilliCream/nitro-azure-pipelines-tasks.git"
+  },
+  "workspaces": [
+    "shared/*",
+    "tasks/*"
+  ],
+  "scripts": {
+    "build": "tsx scripts/build.ts",
+    "package": "tsx scripts/package.ts",
+    "bump": "tsx scripts/bump-version.ts",
+    "scaffold:major": "tsx scripts/scaffold-major.ts",
+    "typecheck": "tsc -b --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@vercel/ncc": "^0.38.4",
+    "tfx-cli": "^0.21.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "yarn@4.2.2",
+  "engines": {
+    "node": ">=20"
+  }
+}

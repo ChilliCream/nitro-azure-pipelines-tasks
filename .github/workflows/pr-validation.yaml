@@ -1,0 +1,52 @@
+name: PR validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-validation-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: 🧰 Enable Corepack
+        run: |
+          corepack enable
+          corepack prepare yarn@4.2.2 --activate
+          yarn --version
+
+      - name: 🧰 Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - name: 📦 Install dependencies
+        run: yarn install --immutable
+
+      - name: 🔎 Typecheck
+        run: yarn typecheck
+
+      - name: 🏗️ Build
+        run: yarn build
+
+      - name: 📦 Package (smoke test)
+        run: yarn package
+
+      - name: ☁️ Upload .vsix artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-vsix
+          path: artifacts/*.vsix
+          retention-days: 7
+          if-no-files-found: error

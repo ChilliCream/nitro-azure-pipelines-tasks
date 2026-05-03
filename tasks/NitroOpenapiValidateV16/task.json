@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "ec7e63b2-9184-4688-9352-c132c7635ec3",
+  "name": "NitroOpenapiValidate",
+  "friendlyName": "Nitro OpenAPI Validate",
+  "description": "Validates OpenAPI documents against the Nitro registry.",
+  "helpUrl": "https://chillicream.com/docs/nitro",
+  "helpMarkDown": "[Documentation](https://chillicream.com/docs/nitro)",
+  "category": "Test",
+  "author": "ChilliCream",
+  "version": {
+    "Major": 16,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "instanceNameFormat": "Nitro OpenAPI Validate: $(stage)",
+  "execution": {
+    "Node20_1": {
+      "target": "dist/index.js"
+    }
+  },
+  "inputs": [
+    {
+      "name": "stage",
+      "type": "string",
+      "label": "Stage",
+      "required": true,
+      "helpMarkDown": "The name of the stage."
+    },
+    {
+      "name": "openapiCollectionId",
+      "type": "string",
+      "label": "OpenAPI collection ID",
+      "required": true,
+      "helpMarkDown": "The ID of the OpenAPI collection."
+    },
+    {
+      "name": "apiKey",
+      "type": "string",
+      "label": "API key",
+      "required": true,
+      "helpMarkDown": "API key for authentication. Use a secret pipeline variable: `$(NITRO_API_KEY)`."
+    },
+    {
+      "name": "patterns",
+      "type": "multiLine",
+      "label": "Patterns",
+      "required": true,
+      "helpMarkDown": "Glob patterns matching OpenAPI documents (one per line)."
+    },
+    {
+      "name": "cloudUrl",
+      "type": "string",
+      "label": "Cloud URL",
+      "required": false,
+      "helpMarkDown": "The URL of the Nitro registry."
+    }
+  ]
+}

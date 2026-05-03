@@ -1,0 +1,95 @@
+name: 🩹 Extension-only release
+
+on:
+  workflow_dispatch: {}
+
+run-name: "🩹 Extension-only release"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: 🧰 Enable Corepack
+        run: |
+          corepack enable
+          corepack prepare yarn@4.2.2 --activate
+          yarn --version
+
+      - name: 🧰 Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - name: 📦 Install dependencies
+        run: yarn install --immutable
+
+      - name: 📝 Bump extension version only
+        id: bump
+        run: yarn bump --extension-only
+
+      - name: 🏗️ Build
+        run: yarn build
+
+      - name: 📦 Package extension
+        run: yarn package
+
+      - name: 📤 Sign commit
+        id: commit
+        uses: ChilliCream/create-signed-commit@75b38ccd01b93548dd2fa458e533b62015ecf35c
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: "Extension-only release ${{ steps.bump.outputs.extension_version }}"
+
+      - name: 🏷️ Sign tag
+        uses: ChilliCream/create-signed-tag@28005302dd79bafbecdb0ad7c1daf2de2b795a39
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: v${{ steps.bump.outputs.extension_version }}
+          sha: ${{ steps.commit.outputs.sha || github.sha }}
+
+      - name: 📤 Publish to Visual Studio Marketplace
+        env:
+          TFX_TOKEN: ${{ secrets.MARKETPLACE_TOKEN }}
+          PUBLISHER: ${{ secrets.MARKETPLACE_PUBLISHER }}
+        run: |
+          set -euo pipefail
+          VSIX=$(ls artifacts/*.vsix | head -n1)
+          if [[ -z "$VSIX" ]]; then
+            echo "::error::No .vsix produced by 'yarn package'."
+            exit 1
+          fi
+          yarn tfx extension publish \
+            --vsix "$VSIX" \
+            --publisher "$PUBLISHER" \
+            --token "$TFX_TOKEN" \
+            --no-color
+
+      - name: 🚀 Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EXT_VERSION: ${{ steps.bump.outputs.extension_version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v${EXT_VERSION}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" artifacts/*.vsix --clobber
+          else
+            gh release create "$TAG" \
+              --title "$TAG" \
+              --notes "Extension-only release. CLI version unchanged." \
+              --verify-tag \
+              artifacts/*.vsix
+          fi

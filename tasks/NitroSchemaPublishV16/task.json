@@ -1,0 +1,75 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "d2ef2a73-b02b-4e5b-80f2-51fe93b994e9",
+  "name": "NitroSchemaPublish",
+  "friendlyName": "Nitro Schema Publish",
+  "description": "Publishes a GraphQL schema to the Nitro registry.",
+  "helpUrl": "https://chillicream.com/docs/nitro",
+  "helpMarkDown": "[Documentation](https://chillicream.com/docs/nitro)",
+  "category": "Deploy",
+  "author": "ChilliCream",
+  "version": {
+    "Major": 16,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "instanceNameFormat": "Nitro Schema Publish: $(stage)",
+  "execution": {
+    "Node20_1": {
+      "target": "dist/index.js"
+    }
+  },
+  "inputs": [
+    {
+      "name": "tag",
+      "type": "string",
+      "label": "Tag",
+      "required": true,
+      "helpMarkDown": "The tag of the schema version."
+    },
+    {
+      "name": "stage",
+      "type": "string",
+      "label": "Stage",
+      "required": true,
+      "helpMarkDown": "The name of the stage."
+    },
+    {
+      "name": "apiId",
+      "type": "string",
+      "label": "API ID",
+      "required": true,
+      "helpMarkDown": "The ID of the API."
+    },
+    {
+      "name": "apiKey",
+      "type": "string",
+      "label": "API key",
+      "required": true,
+      "helpMarkDown": "API key for authentication. Use a secret pipeline variable: `$(NITRO_API_KEY)`."
+    },
+    {
+      "name": "force",
+      "type": "boolean",
+      "label": "Force",
+      "required": false,
+      "defaultValue": "false",
+      "helpMarkDown": "Continue publishing even if breaking changes or validation errors are detected."
+    },
+    {
+      "name": "waitForApproval",
+      "type": "boolean",
+      "label": "Wait for approval",
+      "required": false,
+      "defaultValue": "false",
+      "helpMarkDown": "Require approval in the Nitro UI to continue publishing when breaking changes or validation errors are detected."
+    },
+    {
+      "name": "cloudUrl",
+      "type": "string",
+      "label": "Cloud URL",
+      "required": false,
+      "helpMarkDown": "The URL of the Nitro registry."
+    }
+  ]
+}

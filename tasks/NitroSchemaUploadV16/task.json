@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "23059366-3eb1-48e6-9852-19692c72936d",
+  "name": "NitroSchemaUpload",
+  "friendlyName": "Nitro Schema Upload",
+  "description": "Uploads a GraphQL schema to the Nitro registry.",
+  "helpUrl": "https://chillicream.com/docs/nitro",
+  "helpMarkDown": "[Documentation](https://chillicream.com/docs/nitro)",
+  "category": "Deploy",
+  "author": "ChilliCream",
+  "version": {
+    "Major": 16,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "instanceNameFormat": "Nitro Schema Upload: $(tag)",
+  "execution": {
+    "Node20_1": {
+      "target": "dist/index.js"
+    }
+  },
+  "inputs": [
+    {
+      "name": "tag",
+      "type": "string",
+      "label": "Tag",
+      "required": true,
+      "helpMarkDown": "The tag of the schema version."
+    },
+    {
+      "name": "schemaFile",
+      "type": "filePath",
+      "label": "Schema file",
+      "required": true,
+      "helpMarkDown": "Path to the schema file."
+    },
+    {
+      "name": "apiId",
+      "type": "string",
+      "label": "API ID",
+      "required": true,
+      "helpMarkDown": "The ID of the API."
+    },
+    {
+      "name": "apiKey",
+      "type": "string",
+      "label": "API key",
+      "required": true,
+      "helpMarkDown": "API key for authentication. Use a secret pipeline variable: `$(NITRO_API_KEY)`."
+    },
+    {
+      "name": "cloudUrl",
+      "type": "string",
+      "label": "Cloud URL",
+      "required": false,
+      "helpMarkDown": "The URL of the Nitro registry."
+    }
+  ]
+}

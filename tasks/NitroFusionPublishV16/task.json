@@ -1,0 +1,89 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "505972d6-7b0d-4e66-9971-0a0dd52cdaea",
+  "name": "NitroFusionPublish",
+  "friendlyName": "Nitro Fusion Publish",
+  "description": "Publishes GraphQL source schemas to the Nitro registry.",
+  "helpUrl": "https://chillicream.com/docs/nitro",
+  "helpMarkDown": "[Documentation](https://chillicream.com/docs/nitro)",
+  "category": "Deploy",
+  "author": "ChilliCream",
+  "version": {
+    "Major": 16,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "instanceNameFormat": "Nitro Fusion Publish: $(stage)",
+  "execution": {
+    "Node20_1": {
+      "target": "dist/index.js"
+    }
+  },
+  "inputs": [
+    {
+      "name": "tag",
+      "type": "string",
+      "label": "Tag",
+      "required": true,
+      "helpMarkDown": "The tag of the source schema version."
+    },
+    {
+      "name": "stage",
+      "type": "string",
+      "label": "Stage",
+      "required": true,
+      "helpMarkDown": "The name of the stage."
+    },
+    {
+      "name": "apiId",
+      "type": "string",
+      "label": "API ID",
+      "required": true,
+      "helpMarkDown": "The ID of the API."
+    },
+    {
+      "name": "apiKey",
+      "type": "string",
+      "label": "API key",
+      "required": true,
+      "helpMarkDown": "API key for authentication. Use a secret pipeline variable: `$(NITRO_API_KEY)`."
+    },
+    {
+      "name": "sourceSchemas",
+      "type": "multiLine",
+      "label": "Source schemas",
+      "required": true,
+      "helpMarkDown": "Source schemas to include in the composition (one per line, e.g. `example` or `example@1.0.0`). If no version is specified, the tag value is used."
+    },
+    {
+      "name": "legacyV1Archive",
+      "type": "filePath",
+      "label": "Legacy v1 archive",
+      "required": false,
+      "helpMarkDown": "Path to a Fusion v1 archive file."
+    },
+    {
+      "name": "force",
+      "type": "boolean",
+      "label": "Force",
+      "required": false,
+      "defaultValue": "false",
+      "helpMarkDown": "Continue publishing even if breaking changes or validation errors are detected."
+    },
+    {
+      "name": "waitForApproval",
+      "type": "boolean",
+      "label": "Wait for approval",
+      "required": false,
+      "defaultValue": "false",
+      "helpMarkDown": "Require approval in the Nitro UI to continue publishing when breaking changes or validation errors are detected."
+    },
+    {
+      "name": "cloudUrl",
+      "type": "string",
+      "label": "Cloud URL",
+      "required": false,
+      "helpMarkDown": "The URL of the Nitro registry."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+name: 🔄 Update Nitro CLI Version (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: Nitro CLI version to bind this extension to.
+        required: true
+        type: string
+      is_stable:
+        description: Whether <version> is a stable (X.Y.Z) release.
+        required: true
+        type: boolean
+      is_active_major:
+        description: Whether <version>.major >= highest released stable major.
+        required: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛑 Skip on pre-release
+        if: ${{ inputs.is_stable != true }}
+        run: |
+          echo "::notice::Pre-release CLI versions are not published to the marketplace. Skipping."
+          exit 0
+
+      - name: 📥 Checkout main
+        if: ${{ inputs.is_stable == true }}
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: 🧰 Enable Corepack
+        if: ${{ inputs.is_stable == true }}
+        run: |
+          corepack enable
+          corepack prepare yarn@4.2.2 --activate
+          yarn --version
+
+      - name: 🧰 Setup Node
+        if: ${{ inputs.is_stable == true }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - name: 📦 Install dependencies
+        if: ${{ inputs.is_stable == true }}
+        run: yarn install --immutable
+
+      - name: 📝 Bump versions
+        if: ${{ inputs.is_stable == true }}
+        id: bump
+        run: |
+          yarn bump "${{ inputs.version }}" --is-active-major=${{ inputs.is_active_major }}
+
+      - name: 🏗️ Build
+        if: ${{ inputs.is_stable == true }}
+        run: yarn build
+
+      - name: 📦 Package extension
+        if: ${{ inputs.is_stable == true }}
+        run: yarn package
+
+      - name: 📤 Sign commit
+        if: ${{ inputs.is_stable == true }}
+        id: commit
+        uses: ChilliCream/create-signed-commit@75b38ccd01b93548dd2fa458e533b62015ecf35c
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: "Update Nitro CLI to ${{ inputs.version }}"
+
+      - name: 🏷️ Sign tag
+        if: ${{ inputs.is_stable == true }}
+        uses: ChilliCream/create-signed-tag@28005302dd79bafbecdb0ad7c1daf2de2b795a39
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: v${{ steps.bump.outputs.extension_version }}
+          sha: ${{ steps.commit.outputs.sha || github.sha }}
+
+      - name: 📤 Publish to Visual Studio Marketplace
+        if: ${{ inputs.is_stable == true }}
+        env:
+          TFX_TOKEN: ${{ secrets.MARKETPLACE_TOKEN }}
+          PUBLISHER: ${{ secrets.MARKETPLACE_PUBLISHER }}
+        run: |
+          set -euo pipefail
+          VSIX=$(ls artifacts/*.vsix | head -n1)
+          if [[ -z "$VSIX" ]]; then
+            echo "::error::No .vsix produced by 'yarn package'."
+            exit 1
+          fi
+          yarn tfx extension publish \
+            --vsix "$VSIX" \
+            --publisher "$PUBLISHER" \
+            --token "$TFX_TOKEN" \
+            --no-color
+
+      - name: 🚀 Create GitHub release
+        if: ${{ inputs.is_stable == true }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EXT_VERSION: ${{ steps.bump.outputs.extension_version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v${EXT_VERSION}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists; uploading .vsix to existing release."
+            gh release upload "$TAG" artifacts/*.vsix --clobber
+          else
+            gh release create "$TAG" \
+              --title "$TAG" \
+              --notes "Nitro CLI ${{ inputs.version }}" \
+              --verify-tag \
+              artifacts/*.vsix
+          fi

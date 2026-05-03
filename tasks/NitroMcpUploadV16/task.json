@@ -1,0 +1,66 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "0ed175c6-9482-47df-8fa6-e63c4fe68fef",
+  "name": "NitroMcpUpload",
+  "friendlyName": "Nitro MCP Upload",
+  "description": "Uploads MCP feature collections to the Nitro registry.",
+  "helpUrl": "https://chillicream.com/docs/nitro",
+  "helpMarkDown": "[Documentation](https://chillicream.com/docs/nitro)",
+  "category": "Deploy",
+  "author": "ChilliCream",
+  "version": {
+    "Major": 16,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "instanceNameFormat": "Nitro MCP Upload: $(tag)",
+  "execution": {
+    "Node20_1": {
+      "target": "dist/index.js"
+    }
+  },
+  "inputs": [
+    {
+      "name": "tag",
+      "type": "string",
+      "label": "Tag",
+      "required": true,
+      "helpMarkDown": "The tag of the MCP feature collection version."
+    },
+    {
+      "name": "mcpFeatureCollectionId",
+      "type": "string",
+      "label": "MCP feature collection ID",
+      "required": true,
+      "helpMarkDown": "The ID of the MCP feature collection."
+    },
+    {
+      "name": "apiKey",
+      "type": "string",
+      "label": "API key",
+      "required": true,
+      "helpMarkDown": "API key for authentication. Use a secret pipeline variable: `$(NITRO_API_KEY)`."
+    },
+    {
+      "name": "promptPatterns",
+      "type": "multiLine",
+      "label": "Prompt patterns",
+      "required": false,
+      "helpMarkDown": "Glob patterns matching MCP prompt files (one per line). At least one of `promptPatterns` or `toolPatterns` is required."
+    },
+    {
+      "name": "toolPatterns",
+      "type": "multiLine",
+      "label": "Tool patterns",
+      "required": false,
+      "helpMarkDown": "Glob patterns matching MCP tool files (one per line). At least one of `promptPatterns` or `toolPatterns` is required."
+    },
+    {
+      "name": "cloudUrl",
+      "type": "string",
+      "label": "Cloud URL",
+      "required": false,
+      "helpMarkDown": "The URL of the Nitro registry."
+    }
+  ]
+}
