@@ -6,8 +6,7 @@ async function run(): Promise<void> {
   try {
     await installNitro(pkg.version);
 
-    const sourceMetadata = getSourceMetadata();
-    console.log(JSON.stringify(sourceMetadata));
+    const sourceMetadata = JSON.stringify(getSourceMetadata());
 
     const tag = tl.getInput("tag", true)!;
     const clientId = tl.getInput("clientId", true)!;
@@ -24,6 +23,8 @@ async function run(): Promise<void> {
       clientId,
       "--operations-file",
       operationsFile,
+      "--source-metadata",
+      sourceMetadata,
     ];
 
     if (cloudUrl) {

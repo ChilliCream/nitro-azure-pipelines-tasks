@@ -6,8 +6,7 @@ async function run(): Promise<void> {
   try {
     await installNitro(pkg.version);
 
-    const sourceMetadata = getSourceMetadata();
-    console.log(JSON.stringify(sourceMetadata));
+    const sourceMetadata = JSON.stringify(getSourceMetadata());
 
     const tag = tl.getInput("tag", true)!;
     const openapiCollectionId = tl.getInput("openapiCollectionId", true)!;
@@ -26,6 +25,8 @@ async function run(): Promise<void> {
       tag,
       "--openapi-collection-id",
       openapiCollectionId,
+      "--source-metadata",
+      sourceMetadata,
     ];
 
     for (const pattern of patterns) {

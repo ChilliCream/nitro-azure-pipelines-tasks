@@ -6,8 +6,7 @@ async function run(): Promise<void> {
   try {
     await installNitro(pkg.version);
 
-    const sourceMetadata = getSourceMetadata();
-    console.log(JSON.stringify(sourceMetadata));
+    const sourceMetadata = JSON.stringify(getSourceMetadata());
 
     const tag = tl.getInput("tag", true)!;
     const mcpFeatureCollectionId = tl.getInput("mcpFeatureCollectionId", true)!;
@@ -27,6 +26,8 @@ async function run(): Promise<void> {
       tag,
       "--mcp-feature-collection-id",
       mcpFeatureCollectionId,
+      "--source-metadata",
+      sourceMetadata,
     ];
 
     for (const pattern of promptPatterns) {

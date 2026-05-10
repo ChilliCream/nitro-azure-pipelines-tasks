@@ -6,8 +6,7 @@ async function run(): Promise<void> {
   try {
     await installNitro(pkg.version);
 
-    const sourceMetadata = getSourceMetadata();
-    console.log(JSON.stringify(sourceMetadata));
+    const sourceMetadata = JSON.stringify(getSourceMetadata());
 
     const tag = tl.getInput("tag", true)!;
     const schemaFile = tl.getInput("schemaFile", true)!;
@@ -24,6 +23,8 @@ async function run(): Promise<void> {
       schemaFile,
       "--api-id",
       apiId,
+      "--source-metadata",
+      sourceMetadata,
     ];
 
     if (cloudUrl) {
