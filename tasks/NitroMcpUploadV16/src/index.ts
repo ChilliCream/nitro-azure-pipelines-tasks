@@ -1,10 +1,13 @@
 import * as tl from "azure-pipelines-task-lib/task.js";
-import { execNitro, installNitro, splitMultiline } from "@chillicream/nitro-common";
+import { execNitro, getSourceMetadata, installNitro, splitMultiline } from "@chillicream/nitro-common";
 import pkg from "../package.json" with { type: "json" };
 
 async function run(): Promise<void> {
   try {
     await installNitro(pkg.version);
+
+    const sourceMetadata = getSourceMetadata();
+    console.log(JSON.stringify(sourceMetadata));
 
     const tag = tl.getInput("tag", true)!;
     const mcpFeatureCollectionId = tl.getInput("mcpFeatureCollectionId", true)!;

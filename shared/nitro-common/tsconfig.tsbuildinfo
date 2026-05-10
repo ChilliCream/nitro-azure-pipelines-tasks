@@ -1,1 +1,1 @@
-{"root":["./src/exec.ts","./src/index.ts","./src/installer.ts","./src/platform.ts"],"version":"5.9.3"}
+{"root":["./src/exec.ts","./src/index.ts","./src/installer.ts","./src/platform.ts","./src/source-metadata.ts"],"version":"5.9.3"}
