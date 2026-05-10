@@ -6,6 +6,7 @@ export interface Actor {
 }
 
 export interface SourceMetadata {
+  type: "azure-devops";
   actor: Actor;
   pipelineName: string;
   runNumber: string;
@@ -39,6 +40,7 @@ export function getSourceMetadata(): SourceMetadata {
   const project = requireVariable("System.TeamProject");
 
   const metadata: SourceMetadata = {
+    type: "azure-devops",
     actor,
     pipelineName: requireVariable("Build.DefinitionName"),
     runNumber: requireVariable("Build.BuildNumber"),
