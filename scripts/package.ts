@@ -6,7 +6,7 @@
  * folder in vss-extension.json's `files[]`. To keep the .vsix lean, we stage
  * only the runtime artifacts (task.json, icon.png, dist/index.js, dist/lib*.json,
  * dist/exec-child.js, dist/sourcemap-register.cjs) into artifacts/staging/,
- * copy the manifest + overview/images alongside, and run tfx against that
+ * copy the manifest + README/images alongside, and run tfx against that
  * staging tree. The original tasks/ folders (with src/, tsconfig, etc.) are
  * untouched.
  */
@@ -88,7 +88,7 @@ function stageTaskFolder(taskFolder: string): void {
 
 function stageManifestAssets(): void {
   copyFile(path.join(root, "vss-extension.json"), path.join(stagingDir, "vss-extension.json"));
-  copyFile(path.join(root, "overview.md"), path.join(stagingDir, "overview.md"));
+  copyFile(path.join(root, "README.md"), path.join(stagingDir, "README.md"));
   copyDirShallow(path.join(root, "images"), path.join(stagingDir, "images"));
 
   const license = path.join(root, "LICENSE");

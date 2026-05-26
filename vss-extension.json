@@ -4,7 +4,7 @@
   "name": "Nitro for Azure Pipelines",
   "version": "1.0.1",
   "publisher": "ChilliCream",
-  "description": "Publish, upload, and validate GraphQL schemas, MCP feature collections, OpenAPI specs, and client operations against the Nitro registry.",
+  "description": "Publish, upload, and validate GraphQL schemas, Fusion configurations, clients, OpenAPI and MCP Feature collections against Nitro.",
   "public": true,
   "targets": [
     {
@@ -18,9 +18,8 @@
     "graphql",
     "nitro",
     "chillicream",
-    "schema",
-    "mcp",
-    "openapi"
+    "hotchocolate",
+    "fusion"
   ],
   "scopes": [],
   "icons": {
@@ -28,7 +27,7 @@
   },
   "content": {
     "details": {
-      "path": "overview.md"
+      "path": "README.md"
     }
   },
   "links": {
