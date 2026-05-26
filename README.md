@@ -37,9 +37,9 @@ required.
 | `NitroMcpPublish@16`      | `nitro mcp publish`      |
 | `NitroMcpUpload@16`       | `nitro mcp upload`       |
 | `NitroMcpValidate@16`     | `nitro mcp validate`     |
-| `NitroOpenapiPublish@16`  | `nitro openapi publish`  |
-| `NitroOpenapiUpload@16`   | `nitro openapi upload`   |
-| `NitroOpenapiValidate@16` | `nitro openapi validate` |
+| `NitroOpenApiPublish@16`  | `nitro openapi publish`  |
+| `NitroOpenApiUpload@16`   | `nitro openapi upload`   |
+| `NitroOpenApiValidate@16` | `nitro openapi validate` |
 | `NitroSchemaPublish@16`   | `nitro schema publish`   |
 | `NitroSchemaUpload@16`    | `nitro schema upload`    |
 | `NitroSchemaValidate@16`  | `nitro schema validate`  |

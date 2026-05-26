@@ -13,7 +13,6 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 // @ts-expect-error -- @vercel/ncc has no published type declarations.
 import ncc from "@vercel/ncc";
@@ -79,15 +78,6 @@ async function main(): Promise<void> {
 
   if (folders.length === 0) {
     throw new Error(`No task folders matched ${TASK_DIR_RE} in ${tasksDir}.`);
-  }
-
-  const iconScript = path.join(__dirname, "generate-icons.ts");
-  if (fs.existsSync(iconScript)) {
-    const tsxBin = path.join(root, "node_modules", ".bin", "tsx");
-    const r = spawnSync(tsxBin, [iconScript], { cwd: root, stdio: "inherit" });
-    if (r.status !== 0) {
-      throw new Error("Icon generation failed.");
-    }
   }
 
   console.log(`Building ${folders.length} task(s):`);

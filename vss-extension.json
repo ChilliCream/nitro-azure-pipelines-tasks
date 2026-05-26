@@ -77,13 +77,13 @@
       "path": "tasks/NitroMcpValidateV16"
     },
     {
-      "path": "tasks/NitroOpenapiPublishV16"
+      "path": "tasks/NitroOpenApiPublishV16"
     },
     {
-      "path": "tasks/NitroOpenapiUploadV16"
+      "path": "tasks/NitroOpenApiUploadV16"
     },
     {
-      "path": "tasks/NitroOpenapiValidateV16"
+      "path": "tasks/NitroOpenApiValidateV16"
     },
     {
       "path": "tasks/NitroSchemaPublishV16"
@@ -193,7 +193,7 @@
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
-        "name": "tasks/NitroOpenapiPublishV16"
+        "name": "tasks/NitroOpenApiPublishV16"
       }
     },
     {
@@ -203,7 +203,7 @@
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
-        "name": "tasks/NitroOpenapiUploadV16"
+        "name": "tasks/NitroOpenApiUploadV16"
       }
     },
     {
@@ -213,7 +213,7 @@
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
-        "name": "tasks/NitroOpenapiValidateV16"
+        "name": "tasks/NitroOpenApiValidateV16"
       }
     },
     {

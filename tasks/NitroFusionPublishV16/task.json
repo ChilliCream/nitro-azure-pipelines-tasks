@@ -3,7 +3,7 @@
   "id": "505972d6-7b0d-4e66-9971-0a0dd52cdaea",
   "name": "NitroFusionPublish",
   "friendlyName": "Nitro Fusion Publish",
-  "description": "Publishes GraphQL source schemas to the Nitro registry.",
+  "description": "Publishes a Fusion configuration to the Nitro registry.",
   "helpUrl": "https://chillicream.com/docs/nitro",
   "helpMarkDown": "[Documentation](https://chillicream.com/docs/nitro)",
   "category": "Deploy",

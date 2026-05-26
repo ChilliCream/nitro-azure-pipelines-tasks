@@ -3,7 +3,7 @@
   "id": "0ed175c6-9482-47df-8fa6-e63c4fe68fef",
   "name": "NitroMcpUpload",
   "friendlyName": "Nitro MCP Upload",
-  "description": "Uploads MCP feature collections to the Nitro registry.",
+  "description": "Uploads a MCP Feature collection to the Nitro registry.",
   "helpUrl": "https://chillicream.com/docs/nitro",
   "helpMarkDown": "[Documentation](https://chillicream.com/docs/nitro)",
   "category": "Deploy",

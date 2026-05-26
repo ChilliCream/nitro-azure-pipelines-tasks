@@ -15,9 +15,9 @@
     { "path": "tasks/NitroMcpPublishV16" },
     { "path": "tasks/NitroMcpUploadV16" },
     { "path": "tasks/NitroMcpValidateV16" },
-    { "path": "tasks/NitroOpenapiPublishV16" },
-    { "path": "tasks/NitroOpenapiUploadV16" },
-    { "path": "tasks/NitroOpenapiValidateV16" },
+    { "path": "tasks/NitroOpenApiPublishV16" },
+    { "path": "tasks/NitroOpenApiUploadV16" },
+    { "path": "tasks/NitroOpenApiValidateV16" },
     { "path": "tasks/NitroSchemaPublishV16" },
     { "path": "tasks/NitroSchemaUploadV16" },
     { "path": "tasks/NitroSchemaValidateV16" }

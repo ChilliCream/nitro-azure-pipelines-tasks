@@ -1,32 +1,25 @@
 {
   "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-  "id": "ace10b76-efa1-4170-92a8-df1e60081f4e",
-  "name": "NitroOpenapiPublish",
-  "friendlyName": "Nitro OpenAPI Publish",
-  "description": "Publishes OpenAPI documents to the Nitro registry.",
+  "id": "ec7e63b2-9184-4688-9352-c132c7635ec3",
+  "name": "NitroOpenApiValidate",
+  "friendlyName": "Nitro OpenAPI Validate",
+  "description": "Validates a OpenAPI collection against the Nitro registry.",
   "helpUrl": "https://chillicream.com/docs/nitro",
   "helpMarkDown": "[Documentation](https://chillicream.com/docs/nitro)",
-  "category": "Deploy",
+  "category": "Test",
   "author": "ChilliCream",
   "version": {
     "Major": 16,
     "Minor": 0,
     "Patch": 0
   },
-  "instanceNameFormat": "Nitro OpenAPI Publish: $(stage)",
+  "instanceNameFormat": "Nitro OpenAPI Validate: $(stage)",
   "execution": {
     "Node20_1": {
       "target": "dist/index.js"
     }
   },
   "inputs": [
-    {
-      "name": "tag",
-      "type": "string",
-      "label": "Tag",
-      "required": true,
-      "helpMarkDown": "The tag of the OpenAPI collection version."
-    },
     {
       "name": "stage",
       "type": "string",
@@ -49,20 +42,11 @@
       "helpMarkDown": "API key for authentication. Use a secret pipeline variable: `$(NITRO_API_KEY)`."
     },
     {
-      "name": "force",
-      "type": "boolean",
-      "label": "Force",
-      "required": false,
-      "defaultValue": "false",
-      "helpMarkDown": "Continue publishing even if breaking changes or validation errors are detected."
-    },
-    {
-      "name": "waitForApproval",
-      "type": "boolean",
-      "label": "Wait for approval",
-      "required": false,
-      "defaultValue": "false",
-      "helpMarkDown": "Require approval in the Nitro UI to continue publishing when breaking changes or validation errors are detected."
+      "name": "patterns",
+      "type": "multiLine",
+      "label": "Patterns",
+      "required": true,
+      "helpMarkDown": "Glob patterns matching OpenAPI documents (one per line)."
     },
     {
       "name": "cloudUrl",

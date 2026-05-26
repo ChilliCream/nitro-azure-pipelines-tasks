@@ -1,9 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-  "id": "95d5d5ff-64f2-4df7-a116-a15725828381",
-  "name": "NitroOpenapiUpload",
-  "friendlyName": "Nitro OpenAPI Upload",
-  "description": "Uploads OpenAPI documents to the Nitro registry.",
+  "id": "ace10b76-efa1-4170-92a8-df1e60081f4e",
+  "name": "NitroOpenApiPublish",
+  "friendlyName": "Nitro OpenAPI Publish",
+  "description": "Publishes a OpenAPI collection to the Nitro registry.",
   "helpUrl": "https://chillicream.com/docs/nitro",
   "helpMarkDown": "[Documentation](https://chillicream.com/docs/nitro)",
   "category": "Deploy",
@@ -13,7 +13,7 @@
     "Minor": 0,
     "Patch": 0
   },
-  "instanceNameFormat": "Nitro OpenAPI Upload: $(tag)",
+  "instanceNameFormat": "Nitro OpenAPI Publish: $(stage)",
   "execution": {
     "Node20_1": {
       "target": "dist/index.js"
@@ -26,6 +26,13 @@
       "label": "Tag",
       "required": true,
       "helpMarkDown": "The tag of the OpenAPI collection version."
+    },
+    {
+      "name": "stage",
+      "type": "string",
+      "label": "Stage",
+      "required": true,
+      "helpMarkDown": "The name of the stage."
     },
     {
       "name": "openapiCollectionId",
@@ -42,11 +49,20 @@
       "helpMarkDown": "API key for authentication. Use a secret pipeline variable: `$(NITRO_API_KEY)`."
     },
     {
-      "name": "patterns",
-      "type": "multiLine",
-      "label": "Patterns",
-      "required": true,
-      "helpMarkDown": "Glob patterns matching OpenAPI documents (one per line)."
+      "name": "force",
+      "type": "boolean",
+      "label": "Force",
+      "required": false,
+      "defaultValue": "false",
+      "helpMarkDown": "Continue publishing even if breaking changes or validation errors are detected."
+    },
+    {
+      "name": "waitForApproval",
+      "type": "boolean",
+      "label": "Wait for approval",
+      "required": false,
+      "defaultValue": "false",
+      "helpMarkDown": "Require approval in the Nitro UI to continue publishing when breaking changes or validation errors are detected."
     },
     {
       "name": "cloudUrl",

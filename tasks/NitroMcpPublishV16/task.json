@@ -3,7 +3,7 @@
   "id": "cffd5460-b587-4cef-81bd-1cafb0648003",
   "name": "NitroMcpPublish",
   "friendlyName": "Nitro MCP Publish",
-  "description": "Publishes MCP feature collections to the Nitro registry.",
+  "description": "Publishes a MCP Feature collection to the Nitro registry.",
   "helpUrl": "https://chillicream.com/docs/nitro",
   "helpMarkDown": "[Documentation](https://chillicream.com/docs/nitro)",
   "category": "Deploy",
