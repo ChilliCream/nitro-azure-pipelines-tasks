@@ -2,15 +2,13 @@ name: PR validation
 
 on:
   pull_request:
-  push:
-    branches: [main]
 
 permissions:
   contents: read
 
 concurrency:
   group: pr-validation-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: true
 
 jobs:
   validate:

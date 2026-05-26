@@ -7,10 +7,6 @@ on:
         description: Nitro CLI version to bind this extension to.
         required: true
         type: string
-      is_stable:
-        description: Whether this version is a stable (X.Y.Z) release.
-        required: true
-        type: boolean
       is_active_major:
         description: Whether this version targets the top lane (cli.major >= highest stable major).
         required: true
@@ -26,6 +22,5 @@ jobs:
     uses: ./.github/workflows/update-cli-version.yaml
     with:
       version: ${{ inputs.version }}
-      is_stable: ${{ inputs.is_stable }}
       is_active_major: ${{ inputs.is_active_major }}
     secrets: inherit

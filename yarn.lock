@@ -136,9 +136,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@chillicream/nitro-openapi-publish-v16@workspace:tasks/NitroOpenapiPublishV16":
+"@chillicream/nitro-openapi-publish-v16@workspace:tasks/NitroOpenApiPublishV16":
   version: 0.0.0-use.local
-  resolution: "@chillicream/nitro-openapi-publish-v16@workspace:tasks/NitroOpenapiPublishV16"
+  resolution: "@chillicream/nitro-openapi-publish-v16@workspace:tasks/NitroOpenApiPublishV16"
   dependencies:
     "@chillicream/nitro-common": "workspace:*"
     "@types/node": "npm:^22.0.0"
@@ -148,9 +148,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@chillicream/nitro-openapi-upload-v16@workspace:tasks/NitroOpenapiUploadV16":
+"@chillicream/nitro-openapi-upload-v16@workspace:tasks/NitroOpenApiUploadV16":
   version: 0.0.0-use.local
-  resolution: "@chillicream/nitro-openapi-upload-v16@workspace:tasks/NitroOpenapiUploadV16"
+  resolution: "@chillicream/nitro-openapi-upload-v16@workspace:tasks/NitroOpenApiUploadV16"
   dependencies:
     "@chillicream/nitro-common": "workspace:*"
     "@types/node": "npm:^22.0.0"
@@ -160,9 +160,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@chillicream/nitro-openapi-validate-v16@workspace:tasks/NitroOpenapiValidateV16":
+"@chillicream/nitro-openapi-validate-v16@workspace:tasks/NitroOpenApiValidateV16":
   version: 0.0.0-use.local
-  resolution: "@chillicream/nitro-openapi-validate-v16@workspace:tasks/NitroOpenapiValidateV16"
+  resolution: "@chillicream/nitro-openapi-validate-v16@workspace:tasks/NitroOpenApiValidateV16"
   dependencies:
     "@chillicream/nitro-common": "workspace:*"
     "@types/node": "npm:^22.0.0"
