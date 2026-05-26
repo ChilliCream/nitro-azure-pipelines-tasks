@@ -1,11 +1,8 @@
 # Nitro Azure Pipelines Tasks
 
-Azure Pipelines tasks for the [Nitro CLI](https://chillicream.com/products/nitro).
-This is the Azure DevOps counterpart of the
-[`nitro-*` GitHub Actions](https://github.com/ChilliCream).
+Azure Pipelines tasks wrapping the [Nitro CLI](https://chillicream.com/docs/nitro/cli/installation) for the most common tasks.
 
-Install the extension from the Visual Studio Marketplace, then reference any of
-the tasks in your pipeline:
+Example usage:
 
 ```yaml
 steps:
@@ -57,7 +54,7 @@ Declare `NITRO_API_KEY` as a secret variable in the pipeline UI or in a linked
 variable group. **Never inline an API key as a literal string** — Azure
 Pipelines only masks values that come from secret variables.
 
-## Pull request comments
+<!-- ## Pull request comments
 
 Tasks that post a pull-request comment (e.g. `NitroFusionUpload@16`) need two
 things in a PR-triggered run, otherwise the comment is silently skipped (the
@@ -75,24 +72,12 @@ task itself still succeeds):
 
 2. **Grant the build service "Contribute to pull requests"** — the task posts
    as the build identity, which by default can't write PR threads:
-   *Project Settings → Repositories → (your repo, or the top-level Security tab)
+   _Project Settings → Repositories → (your repo, or the top-level Security tab)
    → Security → find `{Project} Build Service ({Org})` → set
-   **Contribute to pull requests** to **Allow**.* Without it you get
+   **Contribute to pull requests** to **Allow**._ Without it you get
    `TF401027: You need the Git 'PullRequestContribute' permission`.
 
 Notes: this only works for **Azure Repos** repositories in the **same project**
 (`System.AccessToken` can't authenticate against GitHub-hosted repos), and only
 in pull-request-triggered runs. For Azure Repos, "runs on PR" means a
-**Build Validation** branch policy — the YAML `pr:` trigger is ignored.
-
-## Development
-
-Yarn workspaces, Node 20.
-
-```sh
-corepack enable
-yarn install --immutable
-yarn build       # tsc + ncc bundle every task
-yarn test        # mocha + task-lib mock harness
-yarn package     # tfx extension create -> artifacts/*.vsix
-```
+**Build Validation** branch policy — the YAML `pr:` trigger is ignored. -->

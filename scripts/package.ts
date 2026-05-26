@@ -4,7 +4,7 @@
  *
  * tfx-cli has no .tfxignore equivalent — it packages every file under each
  * folder in vss-extension.json's `files[]`. To keep the .vsix lean, we stage
- * only the runtime artifacts (task.json, dist/index.js, dist/lib*.json,
+ * only the runtime artifacts (task.json, icon.png, dist/index.js, dist/lib*.json,
  * dist/exec-child.js, dist/sourcemap-register.cjs) into artifacts/staging/,
  * copy the manifest + README/images alongside, and run tfx against that
  * staging tree. The original tasks/ folders (with src/, tsconfig, etc.) are
@@ -27,6 +27,7 @@ interface VssExtension {
 
 const TASK_RUNTIME_FILES = [
   "task.json",
+  "icon.png",
 ];
 
 const TASK_DIST_FILES = [
