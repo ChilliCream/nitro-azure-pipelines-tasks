@@ -1,5 +1,5 @@
 import * as tl from "azure-pipelines-task-lib/task.js";
-import { execNitro, getSourceMetadata, installNitro } from "@chillicream/nitro-common";
+import { execNitro, getSourceMetadata, installNitro, resolveAuth } from "@chillicream/nitro-common";
 import pkg from "../package.json" with { type: "json" };
 
 async function run(): Promise<void> {
@@ -11,9 +11,7 @@ async function run(): Promise<void> {
     const tag = tl.getInput("tag", true)!;
     const schemaFile = tl.getInput("schemaFile", true)!;
     const apiId = tl.getInput("apiId", true)!;
-    const apiKey = tl.getInput("apiKey", true)!;
-    const cloudUrl = tl.getInput("cloudUrl", false);
-
+    const { apiKey, cloudUrl } = resolveAuth();
     const args: string[] = [
       "schema",
       "upload",

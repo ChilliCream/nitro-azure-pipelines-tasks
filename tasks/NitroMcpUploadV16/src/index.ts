@@ -1,5 +1,5 @@
 import * as tl from "azure-pipelines-task-lib/task.js";
-import { execNitro, getSourceMetadata, installNitro, splitMultiline } from "@chillicream/nitro-common";
+import { execNitro, getSourceMetadata, installNitro, splitMultiline, resolveAuth } from "@chillicream/nitro-common";
 import pkg from "../package.json" with { type: "json" };
 
 async function run(): Promise<void> {
@@ -10,11 +10,9 @@ async function run(): Promise<void> {
 
     const tag = tl.getInput("tag", true)!;
     const mcpFeatureCollectionId = tl.getInput("mcpFeatureCollectionId", true)!;
-    const apiKey = tl.getInput("apiKey", true)!;
+    const { apiKey, cloudUrl } = resolveAuth();
     const promptPatterns = splitMultiline(tl.getInput("promptPatterns", false));
     const toolPatterns = splitMultiline(tl.getInput("toolPatterns", false));
-    const cloudUrl = tl.getInput("cloudUrl", false);
-
     if (promptPatterns.length === 0 && toolPatterns.length === 0) {
       throw new Error("At least one of promptPatterns or toolPatterns must contain an entry.");
     }

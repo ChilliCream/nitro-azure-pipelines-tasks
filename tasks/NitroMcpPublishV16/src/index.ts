@@ -1,5 +1,5 @@
 import * as tl from "azure-pipelines-task-lib/task.js";
-import { execNitro, getSourceMetadata, installNitro } from "@chillicream/nitro-common";
+import { execNitro, getSourceMetadata, installNitro, resolveAuth } from "@chillicream/nitro-common";
 import pkg from "../package.json" with { type: "json" };
 
 async function run(): Promise<void> {
@@ -11,11 +11,9 @@ async function run(): Promise<void> {
     const tag = tl.getInput("tag", true)!;
     const stage = tl.getInput("stage", true)!;
     const mcpFeatureCollectionId = tl.getInput("mcpFeatureCollectionId", true)!;
-    const apiKey = tl.getInput("apiKey", true)!;
+    const { apiKey, cloudUrl } = resolveAuth();
     const force = tl.getBoolInput("force", false);
     const waitForApproval = tl.getBoolInput("waitForApproval", false);
-    const cloudUrl = tl.getInput("cloudUrl", false);
-
     const args: string[] = [
       "mcp",
       "publish",

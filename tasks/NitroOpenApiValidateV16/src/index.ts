@@ -1,5 +1,5 @@
 import * as tl from "azure-pipelines-task-lib/task.js";
-import { execNitro, installNitro, splitMultiline } from "@chillicream/nitro-common";
+import { execNitro, installNitro, splitMultiline, resolveAuth } from "@chillicream/nitro-common";
 import pkg from "../package.json" with { type: "json" };
 
 async function run(): Promise<void> {
@@ -8,10 +8,8 @@ async function run(): Promise<void> {
 
     const stage = tl.getInput("stage", true)!;
     const openapiCollectionId = tl.getInput("openapiCollectionId", true)!;
-    const apiKey = tl.getInput("apiKey", true)!;
+    const { apiKey, cloudUrl } = resolveAuth();
     const patterns = splitMultiline(tl.getInput("patterns", true));
-    const cloudUrl = tl.getInput("cloudUrl", false);
-
     if (patterns.length === 0) {
       throw new Error("patterns must contain at least one entry.");
     }

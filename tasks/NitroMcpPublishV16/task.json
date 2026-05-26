@@ -42,11 +42,32 @@
       "helpMarkDown": "The ID of the MCP feature collection."
     },
     {
+      "name": "authType",
+      "type": "pickList",
+      "label": "Authentication",
+      "required": true,
+      "defaultValue": "apiKey",
+      "options": {
+        "apiKey": "API key (pipeline variable)",
+        "serviceConnection": "Nitro service connection"
+      },
+      "helpMarkDown": "How to authenticate against the Nitro registry. Choose 'Nitro service connection' to reuse a centrally-configured connection."
+    },
+    {
+      "name": "nitroService",
+      "type": "connectedService:nitro",
+      "label": "Nitro service connection",
+      "required": true,
+      "visibleRule": "authType = serviceConnection",
+      "helpMarkDown": "Service connection that supplies the API key and (optionally) the Nitro cloud URL."
+    },
+    {
       "name": "apiKey",
       "type": "string",
       "label": "API key",
       "required": true,
-      "helpMarkDown": "API key for authentication. Use a secret pipeline variable: `$(NITRO_API_KEY)`."
+      "helpMarkDown": "API key for authentication. Use a secret pipeline variable: `$(NITRO_API_KEY)`.",
+      "visibleRule": "authType = apiKey"
     },
     {
       "name": "force",
@@ -69,7 +90,8 @@
       "type": "string",
       "label": "Cloud URL",
       "required": false,
-      "helpMarkDown": "The URL of the Nitro registry."
+      "helpMarkDown": "The URL of the Nitro registry. Only used when authenticating with an API key; when using a service connection, the URL is taken from the connection.",
+      "visibleRule": "authType = apiKey"
     }
   ]
 }

@@ -97,6 +97,42 @@
   ],
   "contributions": [
     {
+      "id": "nitro-service-connection",
+      "type": "ms.vss-endpoint.service-endpoint-type",
+      "targets": [
+        "ms.vss-endpoint.endpoint-types"
+      ],
+      "properties": {
+        "name": "nitro",
+        "displayName": "Nitro",
+        "url": {
+          "displayName": "Cloud URL",
+          "helpText": "The URL of the Nitro registry. Leave blank for the default ChilliCream Cloud endpoint.",
+          "value": "https://api.chillicream.com",
+          "isVisible": "true"
+        },
+        "authenticationSchemes": [
+          {
+            "type": "ms.vss-endpoint.endpoint-auth-scheme-token",
+            "inputDescriptors": [
+              {
+                "id": "apitoken",
+                "name": "API key",
+                "description": "Nitro API key used to authenticate against the registry.",
+                "inputMode": "passwordbox",
+                "isConfidential": true,
+                "validation": {
+                  "isRequired": true,
+                  "dataType": "string"
+                }
+              }
+            ]
+          }
+        ],
+        "helpMarkDown": "<a href=\"https://chillicream.com/docs/nitro\" target=\"_blank\">Learn more</a>"
+      }
+    },
+    {
       "id": "nitro-client-publish-v16",
       "type": "ms.vss-distributed-task.task",
       "targets": [
