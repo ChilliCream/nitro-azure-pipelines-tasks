@@ -17,6 +17,7 @@
   "scripts": {
     "build": "tsx scripts/build.ts",
     "package": "tsx scripts/package.ts",
+    "dev:upload": "tsx scripts/dev-upload.ts",
     "bump": "tsx scripts/bump-version.ts",
     "scaffold:major": "tsx scripts/scaffold-major.ts",
     "typecheck": "tsc -b --noEmit"
