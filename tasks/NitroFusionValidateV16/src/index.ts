@@ -10,7 +10,9 @@ async function run(): Promise<void> {
     const apiId = tl.getInput("apiId", true)!;
     const { apiKey, cloudUrl } = resolveAuth();
     const sourceSchemaFiles = splitMultiline(tl.getInput("sourceSchemaFiles", true));
-    const legacyV1Archive = tl.getInput("legacyV1Archive", false);
+    const legacyV1Archive = tl.filePathSupplied("legacyV1Archive")
+      ? tl.getInput("legacyV1Archive", false)
+      : undefined;
     if (sourceSchemaFiles.length === 0) {
       throw new Error("sourceSchemaFiles must contain at least one entry.");
     }

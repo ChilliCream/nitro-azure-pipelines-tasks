@@ -13,7 +13,9 @@ async function run(): Promise<void> {
     const apiId = tl.getInput("apiId", true)!;
     const { apiKey, cloudUrl } = resolveAuth();
     const sourceSchemas = splitMultiline(tl.getInput("sourceSchemas", true));
-    const legacyV1Archive = tl.getInput("legacyV1Archive", false);
+    const legacyV1Archive = tl.filePathSupplied("legacyV1Archive")
+      ? tl.getInput("legacyV1Archive", false)
+      : undefined;
     const force = tl.getBoolInput("force", false);
     const waitForApproval = tl.getBoolInput("waitForApproval", false);
     if (sourceSchemas.length === 0) {

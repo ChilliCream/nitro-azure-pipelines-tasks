@@ -39,7 +39,7 @@
       "type": "pickList",
       "label": "Authentication",
       "required": true,
-      "defaultValue": "apiKey",
+      "defaultValue": "serviceConnection",
       "options": {
         "apiKey": "API key (pipeline variable)",
         "serviceConnection": "Nitro service connection"
