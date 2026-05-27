@@ -7,3 +7,4 @@ export type { SourceMetadata, Actor } from "./source-metadata.js";
 export { upsertComment, removeComment } from "./pr-comment.js";
 export { resolveAuth } from "./auth.js";
 export type { NitroAuth } from "./auth.js";
+export { getOptionalFilePathInput } from "./path-input.js";

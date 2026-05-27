@@ -1,5 +1,5 @@
 import * as tl from "azure-pipelines-task-lib/task.js";
-import { execNitro, getSourceMetadata, installNitro, splitMultiline, resolveAuth } from "@chillicream/nitro-common";
+import { execNitro, getSourceMetadata, installNitro, splitMultiline, resolveAuth, getOptionalFilePathInput } from "@chillicream/nitro-common";
 import pkg from "../package.json" with { type: "json" };
 
 async function run(): Promise<void> {
@@ -13,9 +13,7 @@ async function run(): Promise<void> {
     const apiId = tl.getInput("apiId", true)!;
     const { apiKey, cloudUrl } = resolveAuth();
     const sourceSchemas = splitMultiline(tl.getInput("sourceSchemas", true));
-    const legacyV1Archive = tl.filePathSupplied("legacyV1Archive")
-      ? tl.getInput("legacyV1Archive", false)
-      : undefined;
+    const legacyV1Archive = getOptionalFilePathInput("legacyV1Archive");
     const force = tl.getBoolInput("force", false);
     const waitForApproval = tl.getBoolInput("waitForApproval", false);
     if (sourceSchemas.length === 0) {
