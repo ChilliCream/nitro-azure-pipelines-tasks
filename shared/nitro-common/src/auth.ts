@@ -7,14 +7,14 @@ export interface NitroAuth {
 
 /**
  * Resolves Nitro authentication from either a service connection or direct
- * task inputs, based on the `authType` pickList. Tasks that omit `authType`
+ * task inputs, based on the `authenticationType` pickList. Tasks that omit `authenticationType`
  * fall back to the legacy direct inputs for backwards compatibility.
  */
 export function resolveAuth(): NitroAuth {
-  const authType = tl.getInput("authType", false) ?? "apiKey";
+  const authenticationType = tl.getInput("authenticationType", false) ?? "apiKey";
 
-  if (authType === "serviceConnection") {
-    const endpointId = tl.getInput("nitroService", true)!;
+  if (authenticationType === "serviceConnection") {
+    const endpointId = tl.getInput("nitroServiceConnection", true)!;
     const apiKey = tl.getEndpointAuthorizationParameter(endpointId, "apitoken", false);
     if (!apiKey) {
       throw new Error(`Service connection '${endpointId}' is missing the API key.`);

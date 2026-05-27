@@ -107,7 +107,7 @@
         "displayName": "Nitro",
         "url": {
           "displayName": "Cloud URL",
-          "helpText": "The URL of the Nitro registry. Leave blank for the default ChilliCream Cloud endpoint.",
+          "helpText": "The URL of the Nitro registry. Overriding this is only required when self-hosting or using a dedicated instance.",
           "value": "https://api.chillicream.com",
           "isVisible": "true"
         },

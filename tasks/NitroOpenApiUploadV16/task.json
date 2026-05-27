@@ -35,7 +35,7 @@
       "helpMarkDown": "The ID of the OpenAPI collection."
     },
     {
-      "name": "authType",
+      "name": "authenticationType",
       "type": "pickList",
       "label": "Authentication",
       "required": true,
@@ -47,11 +47,11 @@
       "helpMarkDown": "How to authenticate against the Nitro registry. Choose 'Nitro service connection' to reuse a centrally-configured connection."
     },
     {
-      "name": "nitroService",
+      "name": "nitroServiceConnection",
       "type": "connectedService:nitro",
       "label": "Nitro service connection",
       "required": true,
-      "visibleRule": "authType = serviceConnection",
+      "visibleRule": "authenticationType = serviceConnection",
       "helpMarkDown": "Service connection that supplies the API key and (optionally) the Nitro cloud URL."
     },
     {
@@ -60,7 +60,7 @@
       "label": "API key",
       "required": true,
       "helpMarkDown": "API key for authentication. Use a secret pipeline variable: `$(NITRO_API_KEY)`.",
-      "visibleRule": "authType = apiKey"
+      "visibleRule": "authenticationType = apiKey"
     },
     {
       "name": "patterns",
@@ -75,7 +75,7 @@
       "label": "Cloud URL",
       "required": false,
       "helpMarkDown": "The URL of the Nitro registry. Only used when authenticating with an API key; when using a service connection, the URL is taken from the connection.",
-      "visibleRule": "authType = apiKey"
+      "visibleRule": "authenticationType = apiKey"
     }
   ]
 }
