@@ -11,7 +11,7 @@
   "version": {
     "Major": 16,
     "Minor": 0,
-    "Patch": 9
+    "Patch": 13
   },
   "instanceNameFormat": "Nitro Schema Publish: $(stage)",
   "execution": {
