@@ -1,6 +1,6 @@
 {
   "name": "@chillicream/nitro-fusion-upload-v16",
-  "version": "16.1.1",
+  "version": "16.1.2",
   "private": true,
   "type": "module",
   "main": "dist/index.js",
