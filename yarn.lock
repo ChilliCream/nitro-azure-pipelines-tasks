@@ -172,6 +172,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@chillicream/nitro-schema-download-v16@workspace:tasks/NitroSchemaDownloadV16":
+  version: 0.0.0-use.local
+  resolution: "@chillicream/nitro-schema-download-v16@workspace:tasks/NitroSchemaDownloadV16"
+  dependencies:
+    "@chillicream/nitro-common": "workspace:*"
+    "@types/node": "npm:^22.0.0"
+    "@vercel/ncc": "npm:^0.38.4"
+    azure-pipelines-task-lib: "npm:^4.13.0"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
 "@chillicream/nitro-schema-publish-v16@workspace:tasks/NitroSchemaPublishV16":
   version: 0.0.0-use.local
   resolution: "@chillicream/nitro-schema-publish-v16@workspace:tasks/NitroSchemaPublishV16"

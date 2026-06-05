@@ -1,0 +1,81 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "12f1cd1b-03ab-4ca4-97b4-9f4053d30a51",
+  "name": "NitroSchemaDownload",
+  "friendlyName": "Nitro Schema Download",
+  "description": "Downloads a GraphQL schema from a stage in the Nitro registry.",
+  "helpUrl": "https://chillicream.com/docs/nitro",
+  "helpMarkDown": "[Documentation](https://chillicream.com/docs/nitro)",
+  "category": "Deploy",
+  "author": "ChilliCream",
+  "version": {
+    "Major": 16,
+    "Minor": 1,
+    "Patch": 2
+  },
+  "instanceNameFormat": "Nitro Schema Download: $(stage)",
+  "execution": {
+    "Node20_1": {
+      "target": "dist/index.js"
+    }
+  },
+  "inputs": [
+    {
+      "name": "apiId",
+      "type": "string",
+      "label": "API ID",
+      "required": true,
+      "helpMarkDown": "The ID of the API."
+    },
+    {
+      "name": "stage",
+      "type": "string",
+      "label": "Stage",
+      "required": true,
+      "helpMarkDown": "The name of the stage."
+    },
+    {
+      "name": "file",
+      "type": "filePath",
+      "label": "File",
+      "required": true,
+      "helpMarkDown": "The file where the schema will be downloaded to."
+    },
+    {
+      "name": "authenticationType",
+      "type": "pickList",
+      "label": "Authentication",
+      "required": true,
+      "defaultValue": "serviceConnection",
+      "options": {
+        "apiKey": "API key (pipeline variable)",
+        "serviceConnection": "Nitro service connection"
+      },
+      "helpMarkDown": "How to authenticate against the Nitro registry. Choose 'Nitro service connection' to reuse a centrally-configured connection."
+    },
+    {
+      "name": "nitroServiceConnection",
+      "type": "connectedService:nitro",
+      "label": "Nitro service connection",
+      "required": true,
+      "visibleRule": "authenticationType = serviceConnection",
+      "helpMarkDown": "Service connection that supplies the API key and (optionally) the Nitro cloud URL."
+    },
+    {
+      "name": "apiKey",
+      "type": "string",
+      "label": "API key",
+      "required": true,
+      "helpMarkDown": "API key for authentication. Use a secret pipeline variable: `$(NITRO_API_KEY)`.",
+      "visibleRule": "authenticationType = apiKey"
+    },
+    {
+      "name": "cloudUrl",
+      "type": "string",
+      "label": "Cloud URL",
+      "required": false,
+      "helpMarkDown": "The URL of the Nitro registry. Only used when authenticating with an API key; when using a service connection, the URL is taken from the connection.",
+      "visibleRule": "authenticationType = apiKey"
+    }
+  ]
+}

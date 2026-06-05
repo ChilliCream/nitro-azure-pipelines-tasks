@@ -81,6 +81,7 @@ masks values that come from secret variables.
 | `NitroOpenApiPublish@16`  | `nitro openapi publish`  |
 | `NitroOpenApiUpload@16`   | `nitro openapi upload`   |
 | `NitroOpenApiValidate@16` | `nitro openapi validate` |
+| `NitroSchemaDownload@16`  | `nitro schema download`  |
 | `NitroSchemaPublish@16`   | `nitro schema publish`   |
 | `NitroSchemaUpload@16`    | `nitro schema upload`    |
 | `NitroSchemaValidate@16`  | `nitro schema validate`  |

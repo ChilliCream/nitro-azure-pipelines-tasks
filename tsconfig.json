@@ -18,6 +18,7 @@
     { "path": "tasks/NitroOpenApiPublishV16" },
     { "path": "tasks/NitroOpenApiUploadV16" },
     { "path": "tasks/NitroOpenApiValidateV16" },
+    { "path": "tasks/NitroSchemaDownloadV16" },
     { "path": "tasks/NitroSchemaPublishV16" },
     { "path": "tasks/NitroSchemaUploadV16" },
     { "path": "tasks/NitroSchemaValidateV16" }
