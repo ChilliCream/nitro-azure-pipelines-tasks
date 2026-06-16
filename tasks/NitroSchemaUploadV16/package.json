@@ -1,6 +1,6 @@
 {
   "name": "@chillicream/nitro-schema-upload-v16",
-  "version": "16.1.3",
+  "version": "16.1.4",
   "private": true,
   "type": "module",
   "main": "dist/index.js",
