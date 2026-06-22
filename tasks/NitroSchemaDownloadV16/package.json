@@ -1,6 +1,6 @@
 {
   "name": "@chillicream/nitro-schema-download-v16",
-  "version": "16.1.4",
+  "version": "16.2.3",
   "private": true,
   "type": "module",
   "main": "dist/index.js",
