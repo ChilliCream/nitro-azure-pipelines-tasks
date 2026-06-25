@@ -10,8 +10,8 @@
   "author": "ChilliCream",
   "version": {
     "Major": 16,
-    "Minor": 2,
-    "Patch": 3
+    "Minor": 3,
+    "Patch": 0
   },
   "instanceNameFormat": "Nitro OpenAPI Publish: $(stage)",
   "execution": {
