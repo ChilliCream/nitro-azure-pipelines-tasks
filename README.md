@@ -6,6 +6,27 @@ The `@16` suffix pins the task to Nitro CLI major version 16. Each task
 self-installs the matching CLI on first use; no separate installer task is
 required.
 
+## Tasks
+
+| Task                      | Subcommand               |
+| ------------------------- | ------------------------ |
+| `NitroClientPublish@16`   | `nitro client publish`   |
+| `NitroClientUpload@16`    | `nitro client upload`    |
+| `NitroClientValidate@16`  | `nitro client validate`  |
+| `NitroFusionPublish@16`   | `nitro fusion publish`   |
+| `NitroFusionUpload@16`    | `nitro fusion upload`    |
+| `NitroFusionValidate@16`  | `nitro fusion validate`  |
+| `NitroMcpPublish@16`      | `nitro mcp publish`      |
+| `NitroMcpUpload@16`       | `nitro mcp upload`       |
+| `NitroMcpValidate@16`     | `nitro mcp validate`     |
+| `NitroOpenApiPublish@16`  | `nitro openapi publish`  |
+| `NitroOpenApiUpload@16`   | `nitro openapi upload`   |
+| `NitroOpenApiValidate@16` | `nitro openapi validate` |
+| `NitroSchemaDownload@16`  | `nitro schema download`  |
+| `NitroSchemaPublish@16`   | `nitro schema publish`   |
+| `NitroSchemaUpload@16`    | `nitro schema upload`    |
+| `NitroSchemaValidate@16`  | `nitro schema validate`  |
+
 ## Authentication
 
 Every task authenticates against the Nitro registry. Two options:
@@ -64,27 +85,6 @@ steps:
 `apiKey` is sensitive. Always pass it through a secret pipeline variable or a
 linked variable group — **never inline a literal key**. Azure Pipelines only
 masks values that come from secret variables.
-
-## Tasks
-
-| Task                      | Subcommand               |
-| ------------------------- | ------------------------ |
-| `NitroClientPublish@16`   | `nitro client publish`   |
-| `NitroClientUpload@16`    | `nitro client upload`    |
-| `NitroClientValidate@16`  | `nitro client validate`  |
-| `NitroFusionPublish@16`   | `nitro fusion publish`   |
-| `NitroFusionUpload@16`    | `nitro fusion upload`    |
-| `NitroFusionValidate@16`  | `nitro fusion validate`  |
-| `NitroMcpPublish@16`      | `nitro mcp publish`      |
-| `NitroMcpUpload@16`       | `nitro mcp upload`       |
-| `NitroMcpValidate@16`     | `nitro mcp validate`     |
-| `NitroOpenApiPublish@16`  | `nitro openapi publish`  |
-| `NitroOpenApiUpload@16`   | `nitro openapi upload`   |
-| `NitroOpenApiValidate@16` | `nitro openapi validate` |
-| `NitroSchemaDownload@16`  | `nitro schema download`  |
-| `NitroSchemaPublish@16`   | `nitro schema publish`   |
-| `NitroSchemaUpload@16`    | `nitro schema upload`    |
-| `NitroSchemaValidate@16`  | `nitro schema validate`  |
 
 <!-- ## Pull request comments
 
