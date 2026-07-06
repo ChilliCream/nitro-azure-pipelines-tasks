@@ -10,7 +10,7 @@
   "author": "ChilliCream",
   "version": {
     "Major": 16,
-    "Minor": 3,
+    "Minor": 4,
     "Patch": 0
   },
   "instanceNameFormat": "Nitro Fusion Validate: $(stage)",
