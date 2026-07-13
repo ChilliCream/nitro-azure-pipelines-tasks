@@ -1,6 +1,6 @@
 {
   "name": "@chillicream/nitro-client-validate-v16",
-  "version": "16.4.0",
+  "version": "16.5.0",
   "private": true,
   "type": "module",
   "main": "dist/index.js",
