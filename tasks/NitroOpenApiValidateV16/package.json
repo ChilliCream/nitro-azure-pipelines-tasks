@@ -1,6 +1,6 @@
 {
   "name": "@chillicream/nitro-openapi-validate-v16",
-  "version": "16.5.0",
+  "version": "16.5.1",
   "private": true,
   "type": "module",
   "main": "dist/index.js",
