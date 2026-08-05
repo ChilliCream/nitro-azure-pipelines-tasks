@@ -1,6 +1,6 @@
 {
   "name": "@chillicream/nitro-mcp-publish-v16",
-  "version": "16.5.1",
+  "version": "16.6.0",
   "private": true,
   "type": "module",
   "main": "dist/index.js",
