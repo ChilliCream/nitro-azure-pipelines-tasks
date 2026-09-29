@@ -1,10 +1,12 @@
 import * as tl from "azure-pipelines-task-lib/task.js";
-import { execNitro, installNitro, resolveAuth } from "@chillicream/nitro-common";
+import { execNitro, getSourceMetadata, installNitro, resolveAuth } from "@chillicream/nitro-common";
 import pkg from "../package.json" with { type: "json" };
 
 async function run(): Promise<void> {
   try {
     await installNitro(pkg.version);
+
+    const sourceMetadata = JSON.stringify(getSourceMetadata());
 
     const stage = tl.getInput("stage", true)!;
     const clientId = tl.getInput("clientId", true)!;
@@ -19,6 +21,8 @@ async function run(): Promise<void> {
       clientId,
       "--operations-file",
       operationsFile,
+      "--source-metadata",
+      sourceMetadata,
     ];
 
     if (cloudUrl) {

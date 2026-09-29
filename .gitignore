@@ -18,5 +18,8 @@ artifacts/
 .vscode/
 .idea/
 
+# azure-pipelines-task-lib vault key (created in cwd when the lib loads locally)
+.taskkey
+
 # Logs
 *.log

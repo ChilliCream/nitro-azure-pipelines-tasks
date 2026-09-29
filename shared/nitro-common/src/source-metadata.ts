@@ -15,6 +15,8 @@ export interface SourceMetadata {
   taskId?: string;
   commitHash?: string;
   repositoryUrl?: string;
+  ref?: string;
+  pullRequestNumber?: number;
   projectUrl: string;
 }
 
@@ -26,6 +28,17 @@ function requireVariable(name: string): string {
   }
 
   return value;
+}
+
+function parsePrNumber(value?: string): number | undefined {
+  const trimmed = value?.trim();
+
+  if (!trimmed || !/^\d+$/.test(trimmed)) {
+    return undefined;
+  }
+
+  const number = Number(trimmed);
+  return number >= 1 && number <= 2147483647 ? number : undefined;
 }
 
 export function getSourceMetadata(): SourceMetadata {
@@ -56,7 +69,24 @@ export function getSourceMetadata(): SourceMetadata {
     provider === "GitHub" ||
     provider === "GitHubEnterprise"
   ) {
-    metadata.commitHash = requireVariable("Build.SourceVersion");
+    if (tl.getVariable("Build.Reason") === "PullRequest") {
+      // Build.SourceVersion is the synthetic merge commit on PR builds; it's
+      // only a fallback in case the PR source commit isn't available.
+      metadata.commitHash =
+        tl.getVariable("System.PullRequest.SourceCommitId") ||
+        requireVariable("Build.SourceVersion");
+      metadata.ref =
+        tl.getVariable("System.PullRequest.SourceBranch") || undefined;
+      // On GitHub, PullRequestId is GitHub's internal id, not the PR number.
+      metadata.pullRequestNumber = parsePrNumber(
+        provider === "TfsGit"
+          ? tl.getVariable("System.PullRequest.PullRequestId")
+          : tl.getVariable("System.PullRequest.PullRequestNumber"),
+      );
+    } else {
+      metadata.commitHash = requireVariable("Build.SourceVersion");
+      metadata.ref = tl.getVariable("Build.SourceBranch") || undefined;
+    }
 
     // Build.Repository.Uri for Azure Repos Git carries a "user@" prefix
     // ("https://tobiastengler@dev.azure.com/..."); the browser URL doesn't.

@@ -21,7 +21,8 @@
     "dev:uninstall": "tsx scripts/dev-uninstall.ts",
     "bump": "tsx scripts/bump-version.ts",
     "scaffold:major": "tsx scripts/scaffold-major.ts",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "test": "tsx --test shared/nitro-common/src/source-metadata.test.ts"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

@@ -1,10 +1,12 @@
 import * as tl from "azure-pipelines-task-lib/task.js";
-import { execNitro, installNitro, splitMultiline, resolveAuth } from "@chillicream/nitro-common";
+import { execNitro, getSourceMetadata, installNitro, splitMultiline, resolveAuth } from "@chillicream/nitro-common";
 import pkg from "../package.json" with { type: "json" };
 
 async function run(): Promise<void> {
   try {
     await installNitro(pkg.version);
+
+    const sourceMetadata = JSON.stringify(getSourceMetadata());
 
     const stage = tl.getInput("stage", true)!;
     const openapiCollectionId = tl.getInput("openapiCollectionId", true)!;
@@ -21,6 +23,8 @@ async function run(): Promise<void> {
       stage,
       "--openapi-collection-id",
       openapiCollectionId,
+      "--source-metadata",
+      sourceMetadata,
     ];
 
     for (const pattern of patterns) {
