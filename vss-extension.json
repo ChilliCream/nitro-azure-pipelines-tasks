@@ -41,7 +41,7 @@
       "uri": "https://github.com/ChilliCream/nitro-azure-pipelines-tasks/issues"
     },
     "license": {
-      "uri": "https://github.com/ChilliCream/nitro-azure-pipelines-tasks/blob/main/LICENSE"
+      "uri": "https://github.com/ChilliCream/nitro-azure-pipelines-tasks/blob/HEAD/LICENSE"
     }
   },
   "repository": {

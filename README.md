@@ -2,9 +2,10 @@
 
 Azure Pipelines tasks wrapping the [Nitro CLI](https://chillicream.com/docs/nitro/cli/installation) for the most common tasks.
 
-The `@16` suffix pins the task to Nitro CLI major version 16. Each task
-self-installs the matching CLI on first use; no separate installer task is
-required.
+The `@16` suffix pins the task to Nitro CLI major version 16 and always
+resolves to the newest stable minor of that major; per-minor pinning is not
+available. Each task self-installs the matching CLI on first use; no separate
+installer task is required.
 
 ## Tasks
 

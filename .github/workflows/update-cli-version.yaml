@@ -4,27 +4,101 @@ on:
   workflow_call:
     inputs:
       version:
-        description: Nitro CLI version to bind this extension to.
+        description: Nitro CLI version to bind this extension to (X.Y.Z).
         required: true
         type: string
-      is_active_major:
-        description: Whether <version>.major >= highest released stable major.
-        required: true
-        type: boolean
 
 permissions:
   contents: write
 
 jobs:
-  release:
+  resolve:
     runs-on: ubuntu-latest
 
+    outputs:
+      publish: ${{ steps.lane.outputs.publish }}
+      lane: ${{ steps.lane.outputs.lane }}
+
     steps:
-      - name: 📥 Checkout main
+      - name: 🛣️ Resolve lane
+        id: lane
+        uses: actions/github-script@v9
+        env:
+          VERSION: ${{ inputs.version }}
+        with:
+          script: |
+            const version = process.env.VERSION;
+            const { owner, repo } = context.repo;
+
+            const parse = (v) => {
+              const m = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.exec(v);
+              return m && [+m[1], +m[2], +m[3]];
+            };
+            const compare = (a, b) => a.map((x, i) => x - b[i]).find((d) => d) ?? 0;
+            const refs = (prefix) => github.paginate(github.rest.git.listMatchingRefs, { owner, repo, ref: prefix, per_page: 100 });
+
+            const v = parse(version);
+            if (!v) {
+              throw new Error(`Version '${version}' is not X.Y.Z.`);
+            }
+            const [major, minor] = v;
+            const lane = `release/v${major}.${minor}`;
+
+            // Only published builds are tagged, so the highest vX.Y.Z tag is what is live on the Marketplace.
+            const highest = (await refs('tags/v'))
+              .map((r) => parse(r.ref.slice('refs/tags/v'.length)))
+              .filter((t) => t)
+              .reduce((max, t) => (!max || compare(t, max) > 0 ? t : max), undefined);
+            if (highest && compare(v, highest) <= 0) {
+              core.notice(`${version} is not higher than v${highest.join('.')}; Marketplace unchanged.`);
+              core.setOutput('publish', 'false');
+              return;
+            }
+
+            const branches = await refs(`heads/release/v${major}.`);
+            const branch = (m) => branches.find((r) => r.ref === `refs/heads/release/v${major}.${m}`);
+
+            if (!branch(minor)) {
+              // Cut from the nearest lower lane's tip in the same major. New majors are cut by hand.
+              let base;
+              for (let m = minor - 1; !base && m >= 0; m--) {
+                base = branch(m)?.object.sha;
+              }
+              if (!base) {
+                throw new Error(`No lower lane for ${lane} in major ${major}. A new major is cut by hand.`);
+              }
+              try {
+                await github.rest.git.createRef({ owner, repo, ref: `refs/heads/${lane}`, sha: base });
+                core.info(`Created ${lane} at ${base}.`);
+              } catch (e) {
+                if (e.status !== 422) throw e;
+                core.info(`${lane} was created concurrently.`);
+              }
+            }
+
+            core.setOutput('publish', 'true');
+            core.setOutput('lane', lane);
+
+  release:
+    needs: resolve
+    if: needs.resolve.outputs.publish == 'true'
+    runs-on: ubuntu-latest
+
+    env:
+      VERSION: ${{ inputs.version }}
+      LANE: ${{ needs.resolve.outputs.lane }}
+
+    steps:
+      - name: 📥 Checkout lane
         uses: actions/checkout@v6
         with:
-          ref: main
+          ref: ${{ needs.resolve.outputs.lane }}
           fetch-depth: 0
+          persist-credentials: false
+
+      - name: 📍 Record lane HEAD
+        id: head
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: 🧰 Enable Corepack
         run: |
@@ -43,9 +117,18 @@ jobs:
         run: yarn install --immutable
 
       - name: 📝 Bump versions
-        id: bump
+        run: yarn bump "$VERSION"
+
+      - name: 📝 Set extension version
         run: |
-          yarn bump "${{ inputs.version }}" --is-active-major=${{ inputs.is_active_major }}
+          node -e '
+            const fs = require("node:fs");
+            for (const file of ["vss-extension.json", "package.json"]) {
+              const json = JSON.parse(fs.readFileSync(file, "utf8"));
+              json.version = process.env.VERSION;
+              fs.writeFileSync(file, JSON.stringify(json, null, 2) + "\n");
+            }
+          '
 
       - name: 🏗️ Build
         run: yarn build
@@ -59,13 +142,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_message: "Update Nitro CLI to ${{ inputs.version }}"
-
-      - name: 🏷️ Sign tag
-        uses: ChilliCream/create-signed-tag@92fa4bc1042b3d5107ee3e240df179952f225887
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: v${{ steps.bump.outputs.extension_version }}
-          sha: ${{ steps.commit.outputs.sha || github.sha }}
+          branch: ${{ needs.resolve.outputs.lane }}
 
       - name: 📤 Publish to Visual Studio Marketplace
         env:
@@ -84,21 +161,30 @@ jobs:
             --token "$TFX_TOKEN" \
             --no-color
 
+      - name: 🏷️ Sign tag
+        uses: ChilliCream/create-signed-tag@305574048e9b917846aa93aa8b23ba258533dd7e
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: v${{ inputs.version }}
+          sha: ${{ steps.commit.outputs.sha || steps.head.outputs.sha }}
+          force: "false"
+
       - name: 🚀 Create GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EXT_VERSION: ${{ steps.bump.outputs.extension_version }}
+          GH_REPO: ${{ github.repository }}
         shell: bash
         run: |
           set -euo pipefail
-          TAG="v${EXT_VERSION}"
+          TAG="v${VERSION}"
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "Release $TAG already exists; uploading .vsix to existing release."
             gh release upload "$TAG" artifacts/*.vsix --clobber
           else
             gh release create "$TAG" \
               --title "$TAG" \
-              --notes "Nitro CLI ${{ inputs.version }}" \
+              --notes "Nitro CLI ${VERSION}" \
+              --latest=true \
               --verify-tag \
               artifacts/*.vsix
           fi
