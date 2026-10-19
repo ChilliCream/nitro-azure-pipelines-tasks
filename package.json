@@ -1,6 +1,6 @@
 {
   "name": "@chillicream/nitro-azure-pipelines-tasks",
-  "version": "16.6.8",
+  "version": "16.6.9",
   "private": true,
   "type": "module",
   "description": "Azure Pipelines tasks for the Nitro CLI.",
