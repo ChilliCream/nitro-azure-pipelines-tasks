@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "nitro-azure-pipelines-tasks",
   "name": "Nitro for Azure Pipelines",
-  "version": "16.7.1",
+  "version": "16.7.2",
   "publisher": "ChilliCream",
   "description": "Publish, upload, and validate GraphQL schemas, Fusion configurations, clients, OpenAPI and MCP Feature collections using Nitro.",
   "public": true,
